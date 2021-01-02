@@ -1,0 +1,108 @@
+<div style="background-color: black;">
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success" data-toggle="modal" data-target="#addRecipeModal" style="background-color: yellow; color: black;">Add Recipe</button>
+    </div>
+</div>
+<div class="row scroll" style="margin-top: 15px;">
+    <div class="col-xs-12">
+        <app-recipe-item
+        *ngFor="let recipeEl of recipes; let i = index"
+        [recipe]="recipeEl"
+        [index]="i"
+        >
+        
+        </app-recipe-item>
+    </div>
+</div>    
+</div>
+
+<!--------Add Recipe Modal-->
+<!---RecipeModal-->
+<div class="modal" id="addRecipeModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+    
+    <div class="modal-header" style="background-color: black;">
+    <button type="button" class="close" data-dismiss="modal" (click)="onReset()" aria-label="Close" style="color: yellow;">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="modalLabelLarge" style="text-align: center; color: yellow; font-family: Segoe Script;"><b>Recipe Form</b></h4>
+    </div>
+    <div class="modal-body">
+    
+      
+        <form [formGroup]="addRecipeForm" (ngSubmit)="onAddRecipe()">
+            <div class="form-group">
+                <label for="recipename">Recipe Name</label>
+                <input type="text" class="form-control" formControlName="recipeName" name="recipeName" placeholder="Please Enter Recipe Name">
+            </div>
+            <div *ngIf="(addRecipeForm.get('recipeName').invalid && addRecipeForm.get('recipeName').touched)">
+                <p style="color: red;">Please Enter Recipe Name</p>
+            </div>  
+            <div class="form-group">
+                <label for="recipeprice">Recipe Price</label>
+                <input type="number" class="form-control" formControlName="recipePrice" name="recipePrice" placeholder="Please Enter Recipe Price">
+            </div>
+            <div *ngIf="(addRecipeForm.get('recipePrice').invalid && addRecipeForm.get('recipePrice').touched)">
+                <p style="color: red;">Please Enter Recipe Price</p>
+            </div>
+            <div class="form-group form-inline">
+                <label for="recipeurl">Recipe Image Url</label>
+                <br>
+                <input type="text" class="form-control set-width" formControlName="recipeUrl" #recipeUrl name="recipeUrl" placeholder="Please Enter Recipe Url">
+                <input type="button" value="Preview" class="btn" (click)="onPreview()"  style="margin: 20px;">
+            </div>
+            <div *ngIf="imagePreview">
+                <img [src]="imagePath" alt="Masala Dosa" style="width:530px;height:300px; margin-left: 15px;">
+            </div>
+            <div *ngIf="(addRecipeForm.get('recipeUrl').invalid && addRecipeForm.get('recipeUrl').touched)">
+                <p style="color: red;">Please Enter Recipe Url</p>
+            </div>   
+            <div class="form-group" style="margin-top: 5px;">
+                <label for="recipeDescription">Recipe Description</label>
+                <textarea rows="1" class="form-control" maxlength="45" formControlName="recipeDescription" name="recipeDescription" placeholder="Please enter Description"></textarea>
+            </div>
+            <div *ngIf="(addRecipeForm.get('recipeDescription').invalid && addRecipeForm.get('recipeDescription').touched)">
+                <p style="color: red;">Please Enter Recipe Description</p>
+            </div> 
+            <div class="form-group">
+            <div class="custom-control custom-radio">
+                    <label class="custom-control-label" for="available">Available</label>
+                    <input id="available" type="radio" class="custom-control-input" style="margin-left:10px" value="available" name="recipeAvailable" formControlName="recipeAvailable">
+                    
+            </div>
+
+            <div class="custom-control custom-radio">
+                <label class="custom-control-label" for="notavailable">Not Available</label>
+                <input id="notavailable" type="radio" class="custom-control-input" style="margin-left:10px" value="notavailable" name="recipeAvailable" formControlName="recipeAvailable">
+                
+            </div>
+            </div>
+            
+            
+            <div class="form-group">
+                <div class="custom-control custom-radio">
+                        <label class="custom-control-label" for="fooddish">Food & Dishes</label>
+                        <input id="food" type="radio" class="custom-control-input" style="margin-left:10px" value="food & dishes" name="foodType" formControlName="foodType">
+                        
+                </div>
+    
+                <div class="custom-control custom-radio">
+                    <label class="custom-control-label" for="desertdrinks">Deserts & Drinks</label>
+                    <input id="desertdrinks" type="radio" class="custom-control-input" style="margin-left:10px" value="drinks & drinks" name="foodType" formControlName="foodType">
+                    
+                </div>
+                </div>             
+                
+             <div>
+                 <button class="btn btn-success" type="submit" style="margin-left: 150px;" [disabled]="!addRecipeForm.valid">Add Recipe</button>
+                 <button class="btn btn-success" type="button" style="margin-left: 30px;" (click)="onReset()">Reset</button>
+             </div>   
+        </form>
+        
+      
+      </div>
+      </div>
+      </div>
+    </div>

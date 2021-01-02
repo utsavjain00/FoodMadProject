@@ -1,0 +1,19 @@
+<div class="uk-panel">
+    <div class="container">
+      <div *ngIf="foodRecipe">
+        <img [src]="foodRecipe.recipeUrl" alt="Avatar" class="image" style="width: 290px; height: 180px;">
+        <div class="overlay">
+          <div class="text" style="margin-top: 25px;">
+            <b>{{foodRecipe.recipeName}}</b>
+          </div>
+    
+          <div class="text" style="margin-top: 90px;">
+            <b>{{foodRecipe.recipePrice|currency:'INR'}}</b>
+          </div>
+          <div style="margin-top: 115px; margin-left: 113px;">
+            <button style="background-color: black; color: white; font-family: Segoe script;" (click)="onAddFood(foodRecipe)" type="button" class="btn">Add Food</button>
+          </div>
+        </div>
+    
+  
+      </div>

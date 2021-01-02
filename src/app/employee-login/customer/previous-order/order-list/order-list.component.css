@@ -1,0 +1,6 @@
+.scroll{
+    float:left;
+    width:550px;
+    overflow-y: auto;
+    height: 520px;
+    }

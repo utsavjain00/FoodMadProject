@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body style="background-color: black;">
+<app-employee-login [searchBoxVisible]="false"></app-employee-login>
+<div style="margin-top: 70px;">
+
+<div class="row">
+    <div class="col-md-5">
+        <app-order-list></app-order-list>
+    </div>
+    <div class="col-md-7" style="margin-left: 0px;">
+        <app-order-detail
+        *ngIf="selectedOrder; else infoText"
+        [recipe]="selectedOrder"></app-order-detail>
+        <ng-template #infoText>
+            <p style="color: darkorange;">Please select a order</p>
+        </ng-template>
+    </div>
+</div>
+</div>
+</body>
+

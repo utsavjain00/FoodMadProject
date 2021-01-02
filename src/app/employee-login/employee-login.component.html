@@ -1,0 +1,251 @@
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <!----nav bar-->
+<div class="container" style="padding-bottom: 2px;">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav-demo" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+<a routerLink="" class="navbar-brand" style="color: blueviolet;font-family:'Kaushan Script',cursive;">FOOD MAD</a>
+
+<a (click)="onHome()" class="navbar-brand" style="color: blueviolet;font-family:'Kaushan Script',cursive; margin-left: 60px;">Home</a>
+
+<input *ngIf="accountType=='0' && searchBoxVisible" type="text" placeholder="Search..." style="margin-top: 10px; margin-left: 320px;" class="topnav" [(ngModel)]="searchBox">
+<button type="submit" *ngIf="accountType=='0' && searchBoxVisible" class="topnav" style="margin-left: 0px;"(click)="onSearch()"><i class="fa fa-search" aria-hidden="true"></i></button>
+</div>
+<div class="collapse navbar-collapse" id="bs-nav-demo">
+
+
+
+<div class="nav navbar-nav navbar-right">
+<!--<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: yellow;">Dropdown <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a  style="background-color: purple; color: yellow;" data-target="#registerModal" data-toggle="modal">Register As Customer</a></li>
+    <li><a  style="background-color: purple; color: yellow;" data-toggle="modal" data-target="#registerSecurityModal">Register As Employee</a></li>
+  </ul>
+</li>-->
+  <li><h5 style="color: yellow; margin-top: 25px;"><u>{{customerName|titlecase}}</u></h5></li>
+  <!--<li><a href="#" style="color: yellow; margin-left: 30px; font-size: 35px;" data-target="#logoutUserModal" data-toggle="modal"><i class="fa fa-user"></i></a></li>-->
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: yellow; font-size: 35px;"><i class="fa fa-user"></i> <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a  style="background-color: purple; color: yellow;" data-target="#changePasswordModal" data-toggle="modal" (click)="onChangePassword()">Change Password</a></li>
+      <li><a  style="background-color: purple; color: yellow;" data-toggle="modal" data-target="#updateAccountModal" (click)="updateAccount()">Account Setting</a></li>
+      <li><a  style="background-color: purple; color: yellow;" data-target="#logoutUserModal" data-toggle="modal">Logout</a></li>
+    </ul>
+  </li>
+</div>
+</div>
+</div>
+</nav>
+
+<!----------------Logout Page----------------------------------------------------------------------->
+<div class="modal" id="logoutUserModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+  <div class="modal-content">
+  
+  <div class="modal-header" style="background-color: black;">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: yellow;">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="modalLabelLarge" style="text-align: center; color: yellow; font-family: Segoe Script;"><b>Logout</b></h4>
+  </div>
+  <div class="modal-body">
+
+    <p><b>Are you sure,You want to Logout?</b></p>
+    <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onLogout()"  style="margin-left: 40px; margin-top: 30px;">OK</button>
+    <button type="button" class="btn btn-success" data-dismiss="modal" style="margin-left: 10px; margin-top: 30px;">Cancel</button>
+    
+    </div>
+    
+    
+    
+    </div>
+    </div>
+    </div>
+<!--------------Change Password-->
+
+<div class="modal" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+  <div class="modal-content">
+  
+  <div class="modal-header" style="background-color: black;">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: yellow;">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="modalLabelLarge"  style="text-align: center; color: yellow; font-family: Segoe Script;"><b>Change Password</b></h4>
+  </div>
+  <div class="modal-body">
+
+    
+    <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()">
+      <!--<div *ngIf="!userVerified; else yesVerified">--->
+        <div class="form-group">
+          <label for="forgetuserid">User Id</label>
+          <input type="email" class="form-control" formControlName="forgetUserId" name="forgetUserId" disabled>
+        </div>
+        <!---<div *ngIf="(forgetPasswordForm.get('forgetUserId').errors?.required && forgetPasswordForm.get('forgetUserId').touched)">
+          <p style="color: red;">Please enter Email Address</p>
+        </div>
+        <div *ngIf="(!forgetPasswordForm.get('forgetUserId').errors?.required && forgetPasswordForm.get('forgetUserId').errors?.email)">
+          <p style="color: red;">Please enter valid Email Address</p>
+        </div>--->
+        <div class="form-group">
+          <label for="changeloginpassword">Enter Password</label>
+          <input type="password" class="form-control" formControlName="changeLoginPassword" name="changeLoginPassword" placeholder="Please enter Password">
+        </div>
+        <div *ngIf="(!changePasswordForm.get('changeLoginPassword').errors?.required && changePasswordForm.get('changeLoginPassword').errors?.minlength)">
+          <p style="color: red;">Please enter valid Password</p>
+        </div>
+        <div class="form-group">
+          <label for="changeconfirmpassword">Enter Password</label>
+          <input type="password" class="form-control" formControlName="changeConfirmPassword" name="changeConfirmPassword" placeholder="Please confirm Password">
+        </div>
+        <div *ngIf="(changePasswordForm.get('changeConfirmPassword').errors?.required && changePasswordForm.get('changeConfirmPassword').touched)">
+          <p style="color: red;" *ngIf="passwordError">Please enter Password</p>
+        </div>
+        <div *ngIf="(changePasswordForm.errors?.mismatchPassword && changePasswordForm.get('changeConfirmPassword').touched)">
+          <p style="color: red;"  *ngIf="passwordError">Password Mismatch</p>
+        </div>
+        
+        
+        <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="changePassword()"  style="margin-left: 30px;" [disabled]="!changePasswordForm.valid">Change Password</button>  
+       <!----<button type="button" class="btn btn-success" style="margin-left: 10px; font-size: 17px;" (click)="onReset()">Reset</button>--->
+      </form>
+      
+    </div>
+    
+    
+    
+    </div>
+    </div>
+    </div>
+<!-------------Update Account Information-->
+
+
+<div class="modal" id="updateAccountModal" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+  <div class="modal-content">
+  
+  <div class="modal-header" style="background-color: black;">
+  <button type="button" class="close" data-dismiss="modal" (click)="onClose()" aria-label="Close" style="color: yellow;">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="modalLabelLarge" style="text-align: center; color: yellow; font-family: Segoe Script;" style="margin-left: 1000px;"><b>Update Account</b></h4>
+  </div>
+  <!-----Accordion--->
+  <div class="modal-body" *ngIf="updateVisible; else notVisible">
+    <form [formGroup]="updateAccountForm" (ngSubmit)="onUpdateAccount()" >
+      
+      <ul uk-accordion active=0>
+        <li class="uk-open">
+            <a class="uk-accordion-title" href="#" style="color: black; font-size: 20px; font-family: Comic Sans MS;"> Details</a>
+            <div class="uk-accordion-content">
+                
+                  <div class="form-group">
+                    <label for="username">Name</label>
+                    <input type="text" class="form-control" formControlName="userName" name="userName" placeholder="Please Enter Name">
+                  </div>
+                  <div *ngIf="(updateAccountForm.get('userName').invalid && updateAccountForm.get('userName').touched)">
+                  <p style="color: red;">Please Enter User Name</p>
+
+                  </div>
+                  <div class="form-group">
+                    <label for="emailaddress">Email Address</label>
+                    <input type="email" class="form-control" disabled name="emailAddress" formControlName="emailAddress">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="mobilenumber">Mobile Number</label>
+                    <input type="text" class="form-control" disabled name="mobileNumber" maxlength="10"  formControlName="mobileNumber" placeholder="Please Enter Mobile Number">
+                  </div>
+                  
+                
+            </div>
+        </li>
+        <li>
+            <a class="uk-accordion-title" href="#" style="color: black; font-size: 20px; font-family: Comic Sans MS;">Address</a>
+            <div class="uk-accordion-content">
+              <div class="form-group">
+                <label for="statelist">State</label>
+                <select class="form-control" name="stateList" formControlName="stateList">
+                  <option [value]=null selected>Select State</option>
+                  <option *ngFor="let stateitem of stateOfIndia" [value]="stateitem">{{stateitem}}</option>
+                </select> 
+              </div>
+              <div class="form-group">
+                <label for="cityname">City</label>
+                <input type="text" class="form-control" name="cityName" formControlName="cityName" placeholder="Please Enter City">
+              </div>
+              <div *ngIf="(updateAccountForm.get('cityName').errors?.required && updateAccountForm.get('cityName').touched)">
+                <p style="color: red;">Please enter City Name</p>
+              </div>
+
+              <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" class="form-control" name="pinCode" formControlName="pinCode" placeholder="Please Enter PinCode">
+              </div>
+              <div *ngIf="(updateAccountForm.get('pinCode').errors?.required && updateAccountForm.get('pinCode').touched)">
+                <p style="color: red;">Please enter PinCode</p>
+              </div>
+
+              <div class="form-group">
+                <label for="flatno">House No. & Name</label>
+                <input type="text" class="form-control" name="flatNo" formControlName="flatNo" placeholder="Please Enter House No.">
+              </div>
+              <div *ngIf="(updateAccountForm.get('flatNo').errors?.required && updateAccountForm.get('flatNo').touched)">
+                <p style="color: red;">Please enter Flat No</p>
+              </div>
+            
+            </div>
+        </li>
+        <li>
+            <a class="uk-accordion-title" href="#" style="color: black; font-size: 20px; font-family: Comic Sans MS;">Password</a>
+            <div class="uk-accordion-content">
+              <div class="form-group">
+                <label for="userpassword">Password</label>
+                <input type="password" class="form-control" disabled  formControlName="userPassword" name="userPassword" placeholder="Please Enter Password">
+              </div>
+              
+
+              <div class="form-group">
+                <label for="confirmpassword">Confirm Password</label>
+                <input type="password" class="form-control" disabled formControlName="confirmPassword" name="confirmPassword" placeholder="Please Confirm Password">
+              </div>
+              
+            </div>
+            
+
+        </li>
+
+    </ul>
+      <br>
+      <button type="submit" class="btn btn-success"  style="margin-left: 55px;" [disabled]="!updateAccountForm.valid">Update</button>
+      <!----<button type="button" class="btn btn-success" style="margin-left: 10px;" (click)="onReset()">Reset</button>--->
+      
+      
+    </form>
+  </div>
+  <ng-template #notVisible>
+    <div class="modal-body">
+        <p>Account Details Updated</p>
+        <!--<button class="btn btn-success" style="margin-left: 10px;" (click)="onClose()" data-dismiss="modal" type="button">Close</button>-->
+    </div>
+  </ng-template>
+  
+  </div>
+  </div>
+  </div>
+
+
+
+
+

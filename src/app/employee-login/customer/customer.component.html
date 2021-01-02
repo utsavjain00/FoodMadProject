@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body style="background-color: black; ">
+<app-employee-login></app-employee-login>
+<div style="margin-top: 70px;" >
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn" type="button" (click)="onPreviousOrder()" style="background-color: black; color: blueviolet; font-family: Segoe script; font-size: 25px;" >View Previous Order <i class="fa fa-arrow-left"></i></button>
+        <button class="btn" type="button" style="background-color: black; color: blueviolet; font-family: Segoe script; font-size: 25px; margin-left: 800px;" (click)="onOrderFood()" >Order Food <i class="fa fa-cutlery" aria-hidden="true"></i></button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" >
+        <app-recently-added *ngIf="searchOrNot;"></app-recently-added>
+    </div>
+    <div class="col-xs-12">
+        <router-outlet></router-outlet>
+    </div>
+   
+</div>
+</div>
+
+</body>
+

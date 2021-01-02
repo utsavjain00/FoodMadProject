@@ -1,0 +1,69 @@
+<body style="background-color: black;">
+    <app-employee-login [searchBoxVisible]="false"></app-employee-login>
+</body>
+
+<div style="margin-top: 80px;">
+
+    <div class="row" style="background-color: black;">
+        <div class="col-md-5" style="background-color: black;">
+            <div style="margin-top:110px; margin-left: 90px;">
+                <img src="https://miro.medium.com/max/1000/0*RHHxKod5FoRBI8Fk.png" style="width: 200px; height: 200px; background-color: black;" >
+            </div>
+            
+        </div>
+        <div class="col-md-7" style="background-color: black;">
+            <div style="margin-top:40px; margin-left: 20px;">
+                <h4 style="color: brown; margin-left: 240px;">Order Summary</h4>
+            </div>
+            <div class="row" *ngIf="orderPresent; else notRecipes">
+                <div class="col-xs-12" *ngFor="let order of orderedRecipes; let i=index">
+                    <div class="col-xs-4">
+                        <h4  style="color: chocolate; margin-top: 10px;">{{order.recipeName}}</h4>    
+                    </div>
+                            <div class="col-xs-2">
+                                <h5 style="color: white; margin-top: 12px;">{{order.recipePrice|currency:'INR'}}</h5>
+                            </div>
+                            <div class="col-xs-2" >
+                                <input type="number" #hello style="color: white; margin-top: 10px; background-color: black;" (input)="onChangeQuantity($event)"class="form-control" size="2" min="1" max="10" value="1">
+                                
+                            </div>
+                            <div class="col-xs-2">
+                                <h5 #totalAmount style="color: white; margin-top: 12px;">{{hello.value*order.recipePrice|currency:'INR'}}</h5>
+                            </div>    
+                            <div class="col-xs-2">
+                                <button class="btn" (click)="onDeleteRecipe(order,i)" style="background-color: black; font-size: 20px; color: yellow;" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>    
+                                
+                        
+                            
+                
+                    
+                </div>
+                
+            </div>
+            <ng-template #notRecipes>
+                <div class="row">
+                    <h4 style="color: yellow;"> Please order Recipe </h4>
+                </div>
+            </ng-template>
+           
+    
+                
+                 <div class="col-xs-12" *ngIf="orderPresent" style="margin-top: 100px; margin-left: 300px;">
+                    <h5  #amountHeading style="color: white; font-size: 20px; margin-left: 140px;"></h5>
+                    <button class="btn " type="button" (click)="onCheckout()"  style="background-color: maroon; color: blanchedalmond; width: 350px; height: 80px; font-size: 20px;" ><b>Checkout</b></button>
+                    </div>
+    
+                
+                
+         
+                
+                    
+            
+            
+            
+            
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,20 @@
+<div style="background-color: black;">
+
+    <a
+        style="background-color: black;"
+        class="list-group-item clearfix"
+        (click)="onSelected()"
+        [routerLink]="['order/',index]">
+    <div class="pull-left">
+        <h4 class="list-group-item-heading" style="color: blueviolet;"><b>{{recipe._id}}</b></h4>
+    
+    </div>
+    <span class="pull-right">
+        <img
+        [src]="recipe.recipes[0].recipeUrl"
+        alt="{{recipe._id}}"
+        class="img-responsive"
+        style="max-height:70px; max-width:100px; min-width: 100px;">
+    </span>
+    </a>
+    </div>
